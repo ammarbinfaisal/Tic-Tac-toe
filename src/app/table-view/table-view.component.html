@@ -8,7 +8,7 @@
         <span class="red-text">{{ issues[row.issue][0] }} issues</span>
         <span class="percentage">
           <p class="green-text">{{ issues[row.issue][1].toFixed(2) }}%</p>
-          <img src="assets/a.svg" />
+          <img src="assets/a.jpg" />
         </span>
         <button mat-button (click)="delete(row.issue)"
           disabled="{{ issues[row.issue][0] > 0 ? 'false' : 'true' }}"
@@ -30,7 +30,7 @@
         <span class="red-text">{{ risks[row.risk][0] }} issues</span>
         <span class="percentage">
           <p class="green-text">{{ risks[row.risk][1].toFixed(2) }}%</p>
-          <img src="assets/a.svg" />
+          <img src="assets/a.jpg" />
         </span>
         <button mat-button (click)="delete(row.risk)" disabled="{{ issues[row.issue][0] > 0 ? 'false' : 'true' }}"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
             width="20" height="20" viewBox="0 0 128 128">
@@ -51,7 +51,7 @@
           <p class="green-text">
             {{ hazards[row.hazard][1].toFixed(2) }}%
           </p>
-          <img src="assets/a.svg" />
+          <img src="assets/a.jpg" />
         </span>
         <button mat-button (click)="delete(row.hazard)" disabled="{{ issues[row.issue][0] > 0 ? 'false' : 'true' }}"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
             width="20" height="20" viewBox="0 0 128 128">
