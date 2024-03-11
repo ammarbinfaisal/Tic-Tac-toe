@@ -1,6 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
+import { DeleteConfirmationComponent } from '../delete-confirmation/delete-confirmation.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 enum ProblemType {
@@ -157,8 +159,17 @@ export class TableViewComponent {
     };
   });
 
-  constructor() {
+  constructor(public dialog: MatDialog) {
     this.updateNumberOfIssues = this.updateNumberOfIssues.bind(this);
+  }
+
+  ngOnInit() {
+    fetch(`${this.Api}/problems`, {
+      method: 'GET',
+    }).then(res => res.json())
+      .then(data => {
+        this.updateUi(data);
+      });
   }
 
   calculatePercentage() {
@@ -222,7 +233,24 @@ export class TableViewComponent {
     this.calculatePercentage();
   }
 
+  @ViewChild(DeleteConfirmationComponent) deleteConfirmationComponent!: DeleteConfirmationComponent;
   delete(problem: string) {
+    // Call deleteIssue method with appropriate arguments
+    const dialogRef = this.dialog.open(DeleteConfirmationComponent, {
+      data: {
+        problem,
+        deleteIssue: this.deleteProblem.bind(this)
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteProblem(problem);
+      }
+    });
+  }
+
+  deleteProblem(problem: string) {
     const [issueTypeEnum, subTypeEnum] = getIssueTypeEnumValue(problem);
     fetch(`${this.Api}/problems`, {
       method: 'DELETE',
